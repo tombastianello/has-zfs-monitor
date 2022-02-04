@@ -23,8 +23,8 @@ jobs:
         type: 'zip'
         filename: 'release.zip'
         exclusions: '*.git* .editorconfig *.ts package-lock.json install'
-    - name: Upload Release
-      uses: ncipollo/release-action@v1
+    - name: Upload Archive
+      uses: actions/upload-artifact@v2
       with:
-        artifacts: "release.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        name: release
+        path: release.zip
