@@ -1,0 +1,30 @@
+#!/bin/bash
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root."
+  exit
+fi
+
+echo "Installer Starting..."
+echo "Target directory: '/etc/tombastianello/has/zfs-monitor'."
+
+echo "Creating directories..."
+mkdir -p /etc/tombastianello/has/zfs-monitor
+touch /etc/tombastianello/has/zfs-monitor/config.json
+echo "Done."
+
+echo "Downloading latest release..."
+sudo curl "" -O /etc/tombastianello/has/zfs-monitor/latest.zip
+echo "Done."
+
+echo "Extracting package..."
+cd /etc/tombastianello/has/zfs-monitor
+unzip latest.zip
+echo "Done."
+
+echo "Installing service..."
+cp zfsmonitor.service /etc/systemd/system/zfsmonitor.service
+systemctl daemon-reload
+systemctl enable zfsmonitor.service
+echo "Done."
+
+echo "Please configure the service using /etc/tombastianello/has/zfs-monitor/config.json before starting it."
