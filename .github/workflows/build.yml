@@ -22,4 +22,4 @@ jobs:
       with:
         type: 'zip'
         filename: 'release.zip'
-        exclusions: '*.git* .editorconfig *.ts'
+        exclusions: '*.git* .editorconfig *.ts package-lock.json install'
