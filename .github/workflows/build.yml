@@ -4,6 +4,26 @@
 name: Create Archive
 on: [push]
 jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: Klemensas/action-autotag@stable
+      with:
+        GITHUB_TOKEN: "${{ secrets.ACTIONS_TOKEN }}"
+        tag_prefix: "v"
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+      with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
   build:
     runs-on: ubuntu-latest
     steps:
@@ -13,6 +33,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm install && npm install -D
     - run: tsc index.ts
     - name: Archive Release
       uses: thedoctor0/zip-release@master
