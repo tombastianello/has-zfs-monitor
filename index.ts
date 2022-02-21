@@ -72,7 +72,7 @@ const postPoolStatus = (poolName: string, poolInfo: ZFSPoolInfo) => {
 let pools: ZFSPoolInfo[] = [];
 const monitorPools = () => {
     for (let pool of config.pool_list) {
-        exec(`zpool list -H ${pool}`, (err, stdout, stderr) => {
+        exec(`/usr/sbin/zpool list -H ${pool}`, (err, stdout, stderr) => {
             if (err) {
                 throw err;
             }
